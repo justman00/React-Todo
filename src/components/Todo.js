@@ -11,7 +11,7 @@ class Todo extends Component {
         style={{
           textDecoration: this.props.task.completed ? "line-through" : "",
         }}
-        onClick={() => this.props.toggleCompleted(this.props.key)}
+        onClick={() => this.props.toggleCompleted(this.props.id)}
       >
         {this.props.task}
       </li>

@@ -21,16 +21,24 @@ class App extends Component {
     this.setState({ todos: newTodos });
   }
 
-  toggleCompleted(index) {
+  toggleCompleted(id) {
     const updatedTodos = [...this.state.todos];
-    updatedTodos[index].completed = true;
+    this.state.updatedTodos.map((todo, idx) => {
+      if (idx === id) {
+        return {
+          ...todo,
+          completed: true,
+        };
+      }
+      return todo;
+    });
     this.setState({ todos: updatedTodos });
   }
 
   // remove tasks using .filter()
-  removeCompleted(index) {
+  removeCompleted(id) {
     const filteredTodos = this.state.todos.filter(function (todo) {
-      return todo.id !== index;
+      return todo.id !== id;
     });
     this.setState({ todos: filteredTodos });
   }
