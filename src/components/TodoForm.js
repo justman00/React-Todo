@@ -7,30 +7,38 @@ class TodoForm extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault(); //prevents the page from automatically refreshing when the form is submitted
-    if (this.state.inputVal === "") return; //check to see if there is any text in the input field.If it is empty, we do nothing, and return from this function
-    this.props.addTodo(this.state.inputVal); //otherwise, we call the function that was passed down as a prop, which actually adds the todo item to our App’s state
-    this.setState({ term: "" }); //clearing out the input field
+    e.preventDefault();
+    if (this.state.inputVal === "") return;
+    console.log("Sunt in functia handleSubmit()");
+    this.props.addTodo(this.state.inputVal);
+    this.setState({ inputVal: "" });
   };
 
   render() {
     return (
-      <form onSubmit={() => this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="enter task"
-          value={this.state.inputVal}
-          onChange={(e) => this.setState({ inputVal: e.target.value })}
-        />
-        <button type="submit">Add ToDo</button>
-        <button
-          type="submit"
-          onClick={() => {
-            this.props.removeCompleted();
-          }}
-        >
-          Clear completed
-        </button>
+      <form onSubmit={this.handleSubmit}>
+        <div className="input-grup mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="enter task"
+            value={this.state.inputVal}
+            onChange={(e) => this.setState({ inputVal: e.target.value })}
+          />
+
+          <div className="input-group">
+            <button type="submit" className="btn btn-primary col-sm-6 ">
+              Add ToDo
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger col-sm-6 "
+              onClick={() => this.props.removeCompleted()}
+            >
+              Delete ToDo
+            </button>
+          </div>
+        </div>
       </form>
     );
   }
