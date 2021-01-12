@@ -1,17 +1,23 @@
 import React, { Component } from "react";
-import "./Todo.css";
+import styled from "styled-components";
+
+const StyledListItem = styled.li`
+  list-style-type: square;
+`;
 
 class Todo extends Component {
-  crossLine = (e) => {
-    const element = e.target;
-    element.classList.toggle("crossed-line");
-    this.props.toggleCompleted(this.props.id);
-  };
-
   render() {
     console.log(this.props);
-    return <li onClick={this.crossLine}>{this.props.task}</li>;
+    return (
+      <StyledListItem
+        onClick={() => this.props.toggleCompleted(this.props.id)}
+        style={{
+          textDecoration: this.props.completed ? "line-through" : "none",
+        }}
+      >
+        {this.props.task}
+      </StyledListItem>
+    );
   }
 }
-
 export default Todo;

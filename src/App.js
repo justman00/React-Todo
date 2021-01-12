@@ -2,7 +2,21 @@ import React, { Component } from "react";
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import MetaTags from "react-meta-tags";
+import styled from "styled-components";
+import { Container, Row } from "reactstrap";
 import "./App.css";
+
+const StyledDiv = styled.div`
+  border-top-left-radius: 42px;
+  background-color: white;
+  padding: 2em;
+`;
+const StyledH2 = styled.h2`
+font-family:  font-family: Arial, Helvetica, sans-serif;
+`;
+const StyledH6 = styled.h6`
+  color: gray;
+`;
 
 //import ls from "local-storage";
 // you will need a place to store your state in this component.
@@ -48,21 +62,21 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container mt-5">
+      <Container className="mt-5">
         <MetaTags>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           ></meta>
         </MetaTags>
-        <div className="d-flex justify-content-center row">
-          <div className="col-md-6">
-            <div className="p-4 bg-white notes">
-              <h2>ToDo List:</h2>
-              <h6>
+        <Row className="d-flex justify-content-center">
+          <Container className="col-md-6">
+            <StyledDiv>
+              <StyledH2>ToDo List:</StyledH2>
+              <StyledH6>
                 You have to complete {this.state.todos.length}
                 {this.state.todos.length === 1 ? " task" : " tasks"}
-              </h6>
+              </StyledH6>
               <TodoList
                 todos={this.state.todos}
                 toggleCompleted={this.toggleCompleted}
@@ -71,10 +85,10 @@ class App extends Component {
                 addTodo={this.addTodo}
                 removeCompleted={this.removeCompleted}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </StyledDiv>
+          </Container>
+        </Row>
+      </Container>
     );
   }
 }

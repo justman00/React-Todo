@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Form, FormGroup, Input, Button } from "reactstrap";
 
 class TodoForm extends Component {
   constructor() {
@@ -16,30 +17,30 @@ class TodoForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="input-grup mb-3">
-          <input
+      <Form onSubmit={this.handleSubmit}>
+        <FormGroup className="mb-3">
+          <Input
             type="text"
             className="form-control"
             placeholder="enter task"
             value={this.state.inputVal}
             onChange={(e) => this.setState({ inputVal: e.target.value })}
           />
-
-          <div className="input-group">
-            <button type="submit" className="btn btn-primary col-sm-6 ">
+          <FormGroup>
+            <Button type="submit" className="col-sm-6 " color="primary">
               Add ToDo
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
-              className="btn btn-danger col-sm-6 "
+              className="col-sm-6 "
+              color="danger"
               onClick={() => this.props.removeCompleted()}
             >
               Delete ToDo
-            </button>
-          </div>
-        </div>
-      </form>
+            </Button>
+          </FormGroup>
+        </FormGroup>
+      </Form>
     );
   }
 }
