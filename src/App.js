@@ -18,13 +18,26 @@ const StyledH6 = styled.h6`
   color: gray;
 `;
 
-//import ls from "local-storage";
-// you will need a place to store your state in this component.
-// design `App` to be the parent component of your application.
-// this component is going to take care of state, and any change handlers you need to work with your state
+const LOCALSTORAGE_KEY = "todos";
 
 class App extends Component {
-  state = { todos: [] };
+  constructor() {
+    super();
+    const localStorageTodos = window.localStorage.getItem(LOCALSTORAGE_KEY);
+    this.state = {
+      todos: localStorageTodos ? JSON.parse(localStorageTodos) : [],
+    };
+  }
+
+  onWriteToLocalStorage = (todos) => {
+    const jsonTodos = JSON.stringify(todos);
+    window.localStorage.setItem(LOCALSTORAGE_KEY, jsonTodos);
+  };
+
+  onUpdateData = (todos) => {
+    this.setState({ todos });
+    this.onWriteToLocalStorage(todos);
+  };
 
   addTodo = (val) => {
     const newTodos = [
@@ -36,31 +49,31 @@ class App extends Component {
       },
     ];
     console.log("Sunt in fuctia addTodo()");
-    this.setState({ todos: newTodos });
+    this.onUpdateData(newTodos);
   };
 
   toggleCompleted = (id) => {
-    const updatedTodos = [...this.state.todos];
-    const newUpdatedTodos = updatedTodos.map((todo) => {
+    const updatedTodos = this.state.todos.map((todo) => {
       if (todo.id === id) {
         return {
           ...todo,
-          completed: true,
+          completed: !todo.completed,
         };
       }
       return todo;
     });
-    this.setState({ todos: newUpdatedTodos });
+    this.onUpdateData({ updatedTodos });
   };
 
   removeCompleted = (id) => {
     const filteredTodos = this.state.todos.filter(function (todo) {
       return todo.id !== id;
     });
-    this.setState({ todos: filteredTodos });
+    this.onUpdateData({ filteredTodos });
   };
 
   render() {
+    console.log(this.state.todos);
     return (
       <Container className="mt-5">
         <MetaTags>

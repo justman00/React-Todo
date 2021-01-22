@@ -10,7 +10,9 @@ class Todo extends Component {
     console.log(this.props);
     return (
       <StyledListItem
-        onClick={() => this.props.toggleCompleted(this.props.id)}
+        onClick={() => {
+          this.props.toggleCompleted(this.props.id);
+        }}
         style={{
           textDecoration: this.props.completed ? "line-through" : "none",
         }}
