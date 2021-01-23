@@ -39,19 +39,6 @@ class App extends Component {
     this.onWriteToLocalStorage(todos);
   };
 
-  addTodo = (val) => {
-    const newTodos = [
-      ...this.state.todos,
-      {
-        task: val,
-        id: Date.now(),
-        completed: false,
-      },
-    ];
-    console.log("Sunt in fuctia addTodo()");
-    this.onUpdateData(newTodos);
-  };
-
   toggleCompleted = (id) => {
     const updatedTodos = this.state.todos.map((todo) => {
       if (todo.id === id) {
@@ -62,14 +49,7 @@ class App extends Component {
       }
       return todo;
     });
-    this.onUpdateData({ updatedTodos });
-  };
-
-  removeCompleted = (id) => {
-    const filteredTodos = this.state.todos.filter(function (todo) {
-      return todo.id !== id;
-    });
-    this.onUpdateData({ filteredTodos });
+    this.onUpdateData(updatedTodos);
   };
 
   render() {
@@ -94,10 +74,7 @@ class App extends Component {
                 todos={this.state.todos}
                 toggleCompleted={this.toggleCompleted}
               />
-              <TodoForm
-                addTodo={this.addTodo}
-                removeCompleted={this.removeCompleted}
-              />
+              <TodoForm todos={this.state.todos} />
             </StyledDiv>
           </Container>
         </Row>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Todo from "./Todo";
 import { Container, Input, List } from "reactstrap";
+
 class TodoList extends Component {
   constructor() {
     super();
@@ -29,10 +30,8 @@ class TodoList extends Component {
             .map((todo, idx) => {
               return (
                 <Todo
-                  task={todo.task}
-                  id={todo.id}
-                  completed={todo.completed}
-                  key={idx}
+                  key={todo.id}
+                  {...todo}
                   toggleCompleted={this.props.toggleCompleted}
                 />
               );

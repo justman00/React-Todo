@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const StyledListItem = styled.li`
-  list-style-type: square;
+  list-style-type: circle;
 `;
 
 class Todo extends Component {

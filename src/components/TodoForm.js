@@ -1,48 +1,76 @@
-import React, { Component } from "react";
+import React, { useReducer, useState } from "react";
 import { Form, FormGroup, Input, Button } from "reactstrap";
 
-class TodoForm extends Component {
-  constructor() {
-    super();
-    this.state = { inputVal: "" };
+const todoReducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TODO":
+      return {
+        ...state,
+      };
   }
+};
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    if (this.state.inputVal === "") return;
-    console.log("Sunt in functia handleSubmit()");
-    this.props.addTodo(this.state.inputVal);
-    this.setState({ inputVal: "" });
+const TodoForm = (props) => {
+  const [inputVal, setInputVal] = useState("");
+  const [todos, setTodos] = useState(props.todos);
+
+  const addTodo = (val) => {
+    const newTodos = [
+      ...todos,
+      {
+        task: val,
+        id: Date.now(),
+        completed: false,
+      },
+    ];
+    setTodos(newTodos);
   };
 
-  render() {
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormGroup className="mb-3">
-          <Input
-            type="text"
-            className="form-control"
-            placeholder="enter task"
-            value={this.state.inputVal}
-            onChange={(e) => this.setState({ inputVal: e.target.value })}
-          />
-          <FormGroup>
-            <Button type="submit" className="col-sm-6 " color="primary">
-              Add ToDo
-            </Button>
-            <Button
-              type="button"
-              className="col-sm-6 "
-              color="danger"
-              onClick={() => this.props.removeCompleted()}
-            >
-              Delete ToDo
-            </Button>
-          </FormGroup>
+  const removeCompleted = () => {
+    const filteredTodos = todos.filter((todo) => {
+      if (todo.completed) {
+        return false;
+      }
+      return true;
+    });
+    setTodos(filteredTodos);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputVal === "") return;
+    console.log("Sunt in functia handleSubmit()");
+    addTodo(inputVal);
+    setInputVal({ inputVal: "" });
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormGroup className="mb-3">
+        <Input
+          type="text"
+          className="form-control"
+          placeholder="enter task"
+          value={inputVal}
+          onChange={(e) => setInputVal({ inputVal: e.target.value })}
+        />{" "}
+        {console.log("Value", inputVal)}
+        <FormGroup>
+          <Button type="submit" className="col-sm-6 " color="primary">
+            Add ToDo
+          </Button>
+          <Button
+            type="button"
+            className="col-sm-6 "
+            color="danger"
+            onClick={() => removeCompleted()}
+          >
+            Delete ToDo
+          </Button>
         </FormGroup>
-      </Form>
-    );
-  }
-}
+      </FormGroup>
+    </Form>
+  );
+};
 
 export default TodoForm;
